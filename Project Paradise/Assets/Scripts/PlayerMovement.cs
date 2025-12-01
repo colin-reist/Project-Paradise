@@ -116,8 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (isOnWall)
         {
-            Debug.Log("Saute du mur" + isOnWall);
-            float horizontalDir = Mathf.Abs(wallNormal.x) > 0.01f
+            var horizontalDir = Mathf.Abs(wallNormal.x) > 0.01f
                 ? Mathf.Sign(wallNormal.x)
                 : (facingRight ? 1f : -1f);
 
@@ -147,9 +146,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool Probe(Vector2 direction, float distance, out RaycastHit2D hit)
     {
-        Vector2 origin = probeOrigin != null ? (Vector2)probeOrigin.position : rb.position;
+        Vector2 origin = probeOrigin ? (Vector2)probeOrigin.position : rb.position;
         hit = Physics2D.CircleCast(origin, probeRadius, direction, distance, environmentLayer);
-        return hit.collider != null;
+        return hit.collider;
     }
 
     private void Flip()
