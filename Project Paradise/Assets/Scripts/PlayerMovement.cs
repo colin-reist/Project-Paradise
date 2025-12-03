@@ -1,172 +1,76 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))] // On s'assure aussi d'avoir un Animator
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 6f;
-    [SerializeField, Range(0f, 1f)] private float airControlMultiplier = 0.7f;
-    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpForce = 10f;
 
-    [Header("Wall Jump")]
-    [SerializeField] private float wallJumpHorizontalForce = 8f;
-    [SerializeField] private float wallJumpVerticalForce = 12f;
-    [SerializeField] private float wallSlideSpeed = 2.5f;
-    [SerializeField] private float wallJumpLockTime = 0.5f;
+    [Header("Ground Check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private LayerMask groundLayer;
 
-    [Header("Environment Probe")]
-    [SerializeField] private Transform probeOrigin;
-    [SerializeField] private float probeRadius = 0.18f;
-    [SerializeField] private float groundProbeDistance = 0.25f;
-    [SerializeField] private float wallProbeDistance = 0.35f;
-    [SerializeField] private LayerMask environmentLayer;
-    [SerializeField, Range(0f, 1f)] private float groundNormalThreshold = 0.45f;
-    [SerializeField, Range(0f, 1f)] private float wallNormalThreshold = 0.4f;
-
-    private Rigidbody2D rb;
-    private float moveInput;
-    private bool facingRight = true;
-
-    private bool isGrounded;
-    private bool isOnWall;
-    private Vector2 wallNormal;
-
-    private float wallJumpLockTimer;
-    private int forcedHorizontalDir;
+    private Rigidbody2D _rb;
+    private Animator _animator; // Référence à l'Animator
+    private float _moveInput;
+    private bool _isGrounded;
+    private bool _facingRight = true;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>(); // On récupère le composant Animator
     }
 
     private void Update()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        UpdateSurfaceState();
-        UpdateWallJumpLock();
-        HandleJumpInput();
+        _moveInput = Input.GetAxisRaw("Horizontal");
+
+        // On envoie la vitesse (en valeur absolue) à l'Animator
+        _animator.SetFloat(Animator.StringToHash("Speed"), Mathf.Abs(_moveInput));
+
+        if (Input.GetButtonDown("Jump") && _isGrounded)
+        {
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
+        }
+
         HandleFlip();
     }
 
     private void FixedUpdate()
     {
-        float control = isGrounded ? 1f : airControlMultiplier;
-        float horizontalInput = forcedHorizontalDir != 0 ? forcedHorizontalDir : moveInput;
-
-        Vector2 velocity = rb.linearVelocity;
-        velocity.x = horizontalInput * moveSpeed * control;
-
-        if (isOnWall && !isGrounded)
-        {
-            velocity.y = Mathf.Max(velocity.y, -wallSlideSpeed);
-        }
-
-        rb.linearVelocity = velocity;
-    }
-
-    private void UpdateSurfaceState()
-    {
-        isGrounded = false;
-        isOnWall = false;
-        wallNormal = Vector2.zero;
-
-        if (Probe(Vector2.down, groundProbeDistance, out RaycastHit2D groundHit) &&
-            groundHit.normal.y >= groundNormalThreshold)
-        {
-            isGrounded = true;
-            forcedHorizontalDir = 0;
-            wallJumpLockTimer = 0f;
-        }
-
-        bool leftWall = Probe(Vector2.left, wallProbeDistance, out RaycastHit2D leftHit) &&
-                        Mathf.Abs(leftHit.normal.x) >= wallNormalThreshold;
-        bool rightWall = Probe(Vector2.right, wallProbeDistance, out RaycastHit2D rightHit) &&
-                         Mathf.Abs(rightHit.normal.x) >= wallNormalThreshold;
-
-        if (!isGrounded && (leftWall || rightWall))
-        {
-            isOnWall = true;
-            wallNormal = leftWall ? leftHit.normal : rightHit.normal;
-        }
-    }
-
-    private void UpdateWallJumpLock()
-    {
-        if (wallJumpLockTimer > 0f)
-        {
-            wallJumpLockTimer -= Time.deltaTime;
-            if (wallJumpLockTimer <= 0f)
-            {
-                wallJumpLockTimer = 0f;
-                forcedHorizontalDir = 0;
-            }
-        }
-    }
-
-    private void HandleJumpInput()
-    {
-        if (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.W))
-            return;
-
-        Vector2 velocity = rb.linearVelocity;
-
-        if (isGrounded)
-        {
-            velocity.y = jumpForce;
-        }
-        else if (isOnWall)
-        {
-            var horizontalDir = Mathf.Abs(wallNormal.x) > 0.01f
-                ? Mathf.Sign(wallNormal.x)
-                : (facingRight ? 1f : -1f);
-
-            velocity.x = horizontalDir * wallJumpHorizontalForce;
-            velocity.y = wallJumpVerticalForce;
-
-            forcedHorizontalDir = horizontalDir > 0f ? 1 : -1;
-            wallJumpLockTimer = wallJumpLockTime;
-        }
-        else
-        {
-            return;
-        }
-
-        rb.linearVelocity = velocity;
+        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        _rb.linearVelocity = new Vector2(_moveInput * moveSpeed, _rb.linearVelocity.y);
     }
 
     private void HandleFlip()
     {
-        float displayInput = forcedHorizontalDir != 0 ? forcedHorizontalDir : moveInput;
-
-        if (displayInput > 0f && !facingRight)
+        if (_moveInput > 0 && !_facingRight)
+        {
             Flip();
-        else if (displayInput < 0f && facingRight)
+        }
+        else if (_moveInput < 0 && _facingRight)
+        {
             Flip();
+        }
     }
 
-    private bool Probe(Vector2 direction, float distance, out RaycastHit2D hit)
-    {
-        Vector2 origin = probeOrigin ? (Vector2)probeOrigin.position : rb.position;
-        hit = Physics2D.CircleCast(origin, probeRadius, direction, distance, environmentLayer);
-        return hit.collider;
-    }
+
 
     private void Flip()
     {
-        facingRight = !facingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1f;
-        transform.localScale = scale;
+        _facingRight = !_facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (probeOrigin == null)
-            return;
-
+        if (groundCheck == null) return;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(probeOrigin.position + Vector3.down * groundProbeDistance, probeRadius);
-        Gizmos.DrawWireSphere(probeOrigin.position + Vector3.left * wallProbeDistance, probeRadius);
-        Gizmos.DrawWireSphere(probeOrigin.position + Vector3.right * wallProbeDistance, probeRadius);
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }

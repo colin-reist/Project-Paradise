@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Project Paradise.slnx"
+    "dotnet.defaultSolution": "Project Paradise.slnx",
+    "dotnet.preferCSharpExtension": true
 }
