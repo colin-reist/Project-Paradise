@@ -6,8 +6,20 @@ public class ChestHandler : MonoBehaviour
     private bool isOpened = false;
     private GameObject chestUiInstance;
 
+
+    [Header("Inventory")]
+    [SerializeField] private GameObject prefab;
+
+
+    [Header("General")]
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private SpriteRenderer keySpriteRenderer;
+
+    void Start()
+    {
+        keySpriteRenderer.enabled = false;
+    }
 
     // Called when another collider enter in contact with this Rigidbody2D (2D physics)
     void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +27,7 @@ public class ChestHandler : MonoBehaviour
         if (collision.CompareTag(playerTag))
         {
             isPlayerNear = true;
+            keySpriteRenderer.enabled = true;
         }
     }
 
@@ -24,6 +37,7 @@ public class ChestHandler : MonoBehaviour
         {
             isPlayerNear = false;
             CloseChest();
+            keySpriteRenderer.enabled = false;
         }
     }
 
@@ -50,7 +64,6 @@ public class ChestHandler : MonoBehaviour
             Destroy(chestUiInstance);
         }
 
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/Chest-inventory");
         if (prefab == null)
         {
             Debug.LogWarning("Chest-inventory prefab not found in Resources/Prefabs.");
@@ -73,7 +86,7 @@ public class ChestHandler : MonoBehaviour
         }
 
         chestUiInstance = Instantiate(prefab, spawnPos, Quaternion.identity);
-        chestUiInstance.transform.localScale = new Vector3(1f, 1f, 1f) * 18f;
+        chestUiInstance.transform.localScale = new Vector3(1f, 1f, 1f) * 3f;
         isOpened = true;
     }
 

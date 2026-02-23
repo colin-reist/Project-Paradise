@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))] // On s'assure aussi d'avoir un Animator
 public class PlayerMovement : MonoBehaviour
@@ -12,14 +13,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    [SerializeField] private InputAction jumpAction;
+    [SerializeField] private PlayerInput playerInput;
+
     private Rigidbody2D _rb;
-    private Animator _animator; // Référence à l'Animator
+    private Animator _animator;
     private float _moveInput;
     private bool _isGrounded;
     private bool _facingRight = true;
 
-    private void Awake()
-    {
+    private void Awake() {
+        jumpAction = playerInput.actions["Jump"];
+        jumpAction.performed += Jump;
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>(); // On récupère le composant Animator
     }
@@ -27,16 +32,16 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _moveInput = Input.GetAxisRaw("Horizontal");
-
-        // On envoie la vitesse (en valeur absolue) à l'Animator
         _animator.SetFloat(Animator.StringToHash("Speed"), Mathf.Abs(_moveInput));
+        
+        HandleFlip();
+    }
 
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+    private void Jump(InputAction.CallbackContext ctx) {
+        if (_isGrounded)
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
         }
-
-        HandleFlip();
     }
 
     private void FixedUpdate()
@@ -47,17 +52,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleFlip()
     {
-        if (_moveInput > 0 && !_facingRight)
-        {
-            Flip();
-        }
-        else if (_moveInput < 0 && _facingRight)
+        if (_moveInput > 0 && !_facingRight || _moveInput < 0 && _facingRight)
         {
             Flip();
         }
     }
-
-
+    
 
     private void Flip()
     {
