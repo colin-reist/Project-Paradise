@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private InputAction jumpAction;
-    [SerializeField] private PlayerInput playerInput;
 
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -23,8 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _facingRight = true;
 
     private void Awake() {
-        jumpAction = playerInput.actions["Jump"];
-        jumpAction.performed += Jump;
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>(); // On récupère le composant Animator
     }
