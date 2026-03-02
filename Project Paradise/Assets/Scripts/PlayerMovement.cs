@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))] // On s'assure aussi d'avoir un Animator
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField] private InputAction jumpAction;
+    private PlayerInput _playerInput;
 
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -23,18 +23,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>(); // On récupère le composant Animator
+        _animator = GetComponent<Animator>();
+
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
     {
         _moveInput = Input.GetAxisRaw("Horizontal");
         _animator.SetFloat(Animator.StringToHash("Speed"), Mathf.Abs(_moveInput));
+
+        if (_playerInput.actions["Jump"].triggered)
+        {
+            Jump();
+        }
         
         HandleFlip();
     }
 
-    private void Jump(InputAction.CallbackContext ctx) {
+    private void Jump() {
         if (_isGrounded)
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);

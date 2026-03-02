@@ -4125,23 +4125,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  jumpAction:
-    m_Name: Jump
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 275ec7f6-7f61-4f4e-941a-053a3268896a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 2ee9b4de-cf53-4696-ad4f-62ed5d505bc9
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    m_Flags: 0
 --- !u!95 &1900019886
 Animator:
   serializedVersion: 7
@@ -4237,7 +4220,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.18005562, y: 1.0099372}
   m_EdgeRadius: 0
---- !u!114 &1900019889
+--- !u!114 &1900019891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4249,7 +4232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 843643bcb8747f74d8ce7e54d3df8d29, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 0d7390ad8b30d4047892436d98c506e6, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -4263,8 +4246,8 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultActionMap: 3bc98b7d-effc-4e9b-a593-b6dcb7596b7b
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &2111775676
@@ -4495,6 +4478,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 51.514
       objectReference: {fileID: 0}
+    - target: {fileID: 3968540260837981524, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
+      propertyPath: m_SolverEditorData.Array.data[2].color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968540260837981524, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
+      propertyPath: m_SolverEditorData.Array.data[2].color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968540260837981524, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
+      propertyPath: m_SolverEditorData.Array.data[3].color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968540260837981524, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
+      propertyPath: m_SolverEditorData.Array.data[3].color.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3994994659140561496, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.0063923593
@@ -4533,11 +4532,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4131313407428550052, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8527939
+      value: 0.9759882
       objectReference: {fileID: 0}
     - target: {fileID: 4131313407428550052, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5222477
+      value: -0.2178235
       objectReference: {fileID: 0}
     - target: {fileID: 4131313407428550052, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4605,7 +4604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7801843065050302515, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.33514202
+      value: 0.2899376
       objectReference: {fileID: 0}
     - target: {fileID: 7801843065050302515, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4617,7 +4616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7801843065050302515, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.9421676
+      value: -0.9570456
       objectReference: {fileID: 0}
     - target: {fileID: 7801843065050302515, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4676,7 +4675,7 @@ PrefabInstance:
       addedObject: {fileID: 1900019885}
     - targetCorrespondingSourceObject: {fileID: 4308889525493058761, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1900019889}
+      addedObject: {fileID: 1900019891}
   m_SourcePrefab: {fileID: 100100000, guid: ca928fbe5440b8c4a83993be3713f443, type: 3}
 --- !u!1001 &9076535057223112626
 PrefabInstance:
