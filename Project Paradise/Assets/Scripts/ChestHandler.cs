@@ -1,20 +1,25 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class ChestHandler : MonoBehaviour
+public class ChestHandler : MonoBehaviour, Iinteractible
 {
-    private bool isPlayerNear = false;
-    private bool isOpened = false;
-    private GameObject chestUiInstance;
-
+    private bool _isPlayerNear = false;
+    private bool _isOpened = false;
+    private GameObject _chestUiInstance;
 
     [Header("Inventory")]
     [SerializeField] private GameObject prefab;
-
-
+    
     [Header("General")]
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private SpriteRenderer keySpriteRenderer;
+    
+    private Camera _cam;
+
+    private void Awake()
+    {
+        _cam = Camera.main;
+    }
 
     void Start()
     {
@@ -22,20 +27,20 @@ public class ChestHandler : MonoBehaviour
     }
 
     // Called when another collider enter in contact with this Rigidbody2D (2D physics)
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(playerTag))
         {
-            isPlayerNear = true;
+            _isPlayerNear = true;
             keySpriteRenderer.enabled = true;
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag(playerTag))
         {
-            isPlayerNear = false;
+            _isPlayerNear = false;
             CloseChest();
             keySpriteRenderer.enabled = false;
         }
@@ -43,41 +48,27 @@ public class ChestHandler : MonoBehaviour
 
     void Update()
     {
-        if (!isPlayerNear)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown(interactKey))
-        {
-            if (isOpened)
-                CloseChest();
-            else
-                OpenChest();
-        }
+        
     }
-
+    
     private void OpenChest()
     {
-        if (chestUiInstance != null)
-        {
-            Destroy(chestUiInstance);
-        }
+        Debug.Log("Chest opened!");
+        Destroy(_chestUiInstance);
 
-        if (prefab == null)
+        if (!prefab)
         {
             Debug.LogWarning("Chest-inventory prefab not found in Resources/Prefabs.");
             return;
         }
 
         Debug.Log("Chest opened!");
-        Camera cam = Camera.main;
-        float targetZ = 0f; // desired world Z for the spawned object
+        float targetZ = 0f;
         Vector3 spawnPos;
-        if (cam != null)
+        if (_cam)
         {
-            float distance = Mathf.Abs(cam.transform.position.z - targetZ);
-            spawnPos = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, distance));
+            float distance = Mathf.Abs(_cam.transform.position.z - targetZ);
+            spawnPos = _cam.ScreenToWorldPoint(new Vector3(Screen.width / 2f, Screen.height / 2f, distance));
             spawnPos.z = targetZ;
         }
         else
@@ -85,19 +76,23 @@ public class ChestHandler : MonoBehaviour
             spawnPos = new Vector3(0f, 0f, targetZ);
         }
 
-        chestUiInstance = Instantiate(prefab, spawnPos, Quaternion.identity);
-        chestUiInstance.transform.localScale = new Vector3(1f, 1f, 1f) * 3f;
-        isOpened = true;
+        _chestUiInstance = Instantiate(prefab, spawnPos, Quaternion.identity,  _cam.transform);
+        _chestUiInstance.transform.localScale = new Vector3(1f, 1f, 1f) * 8f;
+        _isOpened = true;
     }
 
     private void CloseChest()
     {
-        if (chestUiInstance != null)
-        {
-            Destroy(chestUiInstance);
-            chestUiInstance = null;
-        }
+        Destroy(_chestUiInstance);
+        _chestUiInstance = null;
+        _isOpened = false;
+    }
 
-        isOpened = false;
+    public void Interact()
+    {
+        if (_isOpened)
+            CloseChest();
+        else
+            OpenChest();
     }
 }

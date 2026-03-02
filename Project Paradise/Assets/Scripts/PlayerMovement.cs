@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -13,8 +12,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    
     private PlayerInput _playerInput;
-
+    private InputAction _jumpAction;
     private Rigidbody2D _rb;
     private Animator _animator;
     private float _moveInput;
@@ -26,14 +27,15 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _playerInput = GetComponent<PlayerInput>();
+        _jumpAction = _playerInput.actions["Jump"];
     }
 
     private void Update()
     {
-        _moveInput = Input.GetAxisRaw("Horizontal");
-        _animator.SetFloat(Animator.StringToHash("Speed"), Mathf.Abs(_moveInput));
-
-        if (_playerInput.actions["Jump"].triggered)
+        _moveInput = _playerInput.actions["Move"].ReadValue<Vector2>().x;
+        _animator.SetFloat(SpeedHash, Mathf.Abs(_moveInput));
+        
+        if (_jumpAction.triggered)
         {
             Jump();
         }
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
         _rb.linearVelocity = new Vector2(_moveInput * moveSpeed, _rb.linearVelocity.y);
     }
 
@@ -73,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (groundCheck == null) return;
+        if (groundCheck is null) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
