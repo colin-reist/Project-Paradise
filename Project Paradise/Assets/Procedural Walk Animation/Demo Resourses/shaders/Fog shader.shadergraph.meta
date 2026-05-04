@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ef51aa777d680e64fade2f786b1082f3
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Demo Resourses/shaders/Fog shader.shadergraph
+  uploadId: 721731

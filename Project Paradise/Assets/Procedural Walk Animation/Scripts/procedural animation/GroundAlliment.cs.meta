@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1206447953913cf49926d127e2474c5f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Scripts/procedural animation/GroundAlliment.cs
+  uploadId: 721731

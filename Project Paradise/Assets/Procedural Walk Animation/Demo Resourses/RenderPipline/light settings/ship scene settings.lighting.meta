@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5ec18fb03e253054c9a0d69ff36fd464
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Demo Resourses/RenderPipline/light
+    settings/ship scene settings.lighting
+  uploadId: 721731

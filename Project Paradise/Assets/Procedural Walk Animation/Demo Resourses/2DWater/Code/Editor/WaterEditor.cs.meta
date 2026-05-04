@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 92884302c7f001d459edcc577a7d3f77
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Demo Resourses/2DWater/Code/Editor/WaterEditor.cs
+  uploadId: 721731

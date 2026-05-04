@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1f14b4f4931af0d45aa3b2c890df4e22
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Demo Resourses/2DWater/Materials/Realistic/ReflectiveWater.mat
+  uploadId: 721731

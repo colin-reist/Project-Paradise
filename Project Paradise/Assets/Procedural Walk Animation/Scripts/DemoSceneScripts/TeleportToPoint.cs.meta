@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 62f94c8237462b145af4c820bd3eeb85
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Scripts/DemoSceneScripts/TeleportToPoint.cs
+  uploadId: 721731

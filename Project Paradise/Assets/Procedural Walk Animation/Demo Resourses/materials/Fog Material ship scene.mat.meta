@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f1668918d5206484cb2bf321da4ef041
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Demo Resourses/materials/Fog Material
+    ship scene.mat
+  uploadId: 721731

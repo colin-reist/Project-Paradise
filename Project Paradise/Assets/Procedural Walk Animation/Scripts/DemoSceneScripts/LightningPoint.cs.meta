@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: db0ca0eb37cc8b34ea3f6f81dfc0fac9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Scripts/DemoSceneScripts/LightningPoint.cs
+  uploadId: 721731

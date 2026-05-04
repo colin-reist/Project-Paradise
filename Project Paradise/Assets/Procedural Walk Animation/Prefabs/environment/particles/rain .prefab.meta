@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e0597b56d6229842bb2fcac6a116706
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Prefabs/environment/particles/rain
+    .prefab
+  uploadId: 721731

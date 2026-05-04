@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dc78ff697f624cc47baa6b4926c5e6ab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Prefabs/Creatures/limbo like spider.prefab
+  uploadId: 721731

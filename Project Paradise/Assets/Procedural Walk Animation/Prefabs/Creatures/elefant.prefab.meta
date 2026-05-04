@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ada8c66e460863f44a9a6cf1ef2c8b82
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249772
+  packageName: procedural walk 2D
+  packageVersion: 1.1
+  assetPath: Assets/Procedural Walk Animation/Prefabs/Creatures/elefant.prefab
+  uploadId: 721731
