@@ -32,9 +32,6 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        if (_interactAction.triggered && _currentInteractible != null)
-        {
-            _currentInteractible.Interact();
-        }
+        
     }
 }

@@ -1,28 +1,40 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(200)]
 public class ArmAim : MonoBehaviour
 {
-    [SerializeField] private Transform ikTargetLeft;
-    [SerializeField] private Transform ikTargetRight;
+    [Header("Target des bras")] 
+    [SerializeField] private Transform _armTargetF;
+    [SerializeField] private Transform _armTargetB;
+    private PlayerInput _playerInput;
+    private InputAction _aimAction;
     
-    private Camera _cam;
 
-    void Start()
+    private Camera _cam;
+    
+
+    private void Awake()
     {
         _cam = Camera.main;
+        _playerInput = GetComponent<PlayerInput>();
+        _aimAction = _playerInput.actions["Aim"];
     }
 
-    void Update()
+    private void LateUpdate()
     {
-        if (Mouse.current.rightButton.isPressed)
-        {
-            Vector2 screenPos = Mouse.current.position.ReadValue();
-            Vector3 mouseWorld = _cam.ScreenToWorldPoint(screenPos);
-            mouseWorld.z = 0f;
+        _armTargetB.position = _cam.ScreenToWorldPoint(Input.mousePosition);
+    }
 
-            ikTargetLeft.position = mouseWorld;
-            ikTargetRight.position = mouseWorld;
+    private void Update()
+    {
+        if (_aimAction.IsPressed())
+        {
+            // distance maximale entre l'épaule et la main pour éviter de tendre le bras au max comme cassé
+            
+            //
+            print("Vise");
         }
     }
 }
