@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +6,6 @@ public class PlayerInteract : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private InputAction _interactAction;
-    private GameObject _gameObject;
     private Iinteractible _currentInteractible;
 
     private void Awake()
@@ -20,14 +18,24 @@ public class PlayerInteract : MonoBehaviour
     {
         var interactible = other.GetComponent<Iinteractible>();
         if (interactible != null)
+        {
+            _currentInteractible?.RemoveTarget();
             _currentInteractible = interactible;
+            _currentInteractible.BecomeTarget();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         var interactible = other.GetComponent<Iinteractible>();
         if (interactible != null)
-            _currentInteractible = null;
+        {
+            interactible.RemoveTarget();
+            if (_currentInteractible == interactible)
+            {
+                _currentInteractible = null;
+            }
+        }
     }
 
     void Update()
